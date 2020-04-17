@@ -5,7 +5,6 @@ import android.widget.Button
 import androidx.fragment.app.FragmentActivity
 import com.dial.models.PreferenceHelper
 import com.dial.presenters.DialHandler
-import io.reactivex.plugins.RxJavaPlugins
 
 class MainActivity : FragmentActivity() {
 

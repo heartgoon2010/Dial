@@ -1,2 +1,3 @@
 rootProject.name='DIAL'
 include ':app'
+include ':dial_lib'
