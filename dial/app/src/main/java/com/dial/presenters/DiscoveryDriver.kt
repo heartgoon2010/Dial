@@ -5,6 +5,7 @@ import android.os.SystemClock
 import com.dial.models.*
 import com.dial.presenters.interfaces.AppInfoQueryInterface
 import com.dial.presenters.interfaces.DeviceDescriptionFetcherInterface
+import com.dial.presenters.interfaces.DiscoveryListener
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -17,7 +18,8 @@ class DiscoveryDriver(
     private val mSearchTarget: String,
     private val mDialConfig: DialParameter,
     private val mDeviceDescriptionFetcher: DeviceDescriptionFetcherInterface,
-    private val mAppInfoQuery: AppInfoQueryInterface
+    private val mAppInfoQuery: AppInfoQueryInterface,
+    private val mDiscoveryListener: DiscoveryListener
 ) {
 
     companion object {
@@ -56,7 +58,7 @@ class DiscoveryDriver(
                 .map { packet ->
                     mDialDeviceFinder.parseSearchResponsePacket(packet, mSearchTarget)
                 }.filter { uPnPServer ->
-                    true
+                    mDiscoveryListener.onFindUpnpServer(uPnPServer)
                 }.flatMap { uPnPServer ->
                     mDeviceDescriptionFetcher.requestDeviceDescription(uPnPServer)
                         .filter { dialDeviceDescription ->
@@ -65,9 +67,17 @@ class DiscoveryDriver(
                         }.map { dialDeviceDescription ->
                             dialDeviceDescription.uPnPServer = uPnPServer
                             dialDeviceDescription
+                        }.filter { deviceDescription ->
+                            mDiscoveryListener.onDescriptionReceived(uPnPServer, deviceDescription)
                         }
                 }.flatMap { dialDeviceDescription ->
                     mAppInfoQuery.queryAppInfo(dialDeviceDescription, mTargetApp)
+                        .filter { appModel ->
+                            dialDeviceDescription.uPnPServer?.let { upnpServer ->
+                                mDiscoveryListener.onAppInfoReceived(upnpServer, appModel)
+                            }
+                            true
+                        }
                 }.subscribe()
     }
 

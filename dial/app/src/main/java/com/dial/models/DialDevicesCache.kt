@@ -65,10 +65,7 @@ object DialDevicesCache : DeviceObserver {
         }
     }
 
-    override fun onDeviceDescriptionReady(
-        uPnpServer: UPnPServer,
-        dialDeviceDescription: DialDeviceDescription
-    ) {
+    override fun onDeviceDescriptionReady(uPnpServer: UPnPServer, dialDeviceDescription: DialDeviceDescription) {
         val key = "${uPnpServer.ssid}$KEY_SEPARATOR${uPnpServer.location}"
         if (mDiscoveryResult[key] == null) {
             mDiscoveryResult[key] = DiscoveryResult(uPnpServer)
