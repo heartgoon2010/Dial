@@ -33,10 +33,7 @@ class RokuAppOperator : AppInfoQueryInterface {
         private const val ATTRIBUTE_APP_ID = "id"
     }
 
-    override fun queryAppInfo(
-        dialDeviceDescription: DialDeviceDescription,
-        appName: String
-    ): Observable<DialAppModel> {
+    override fun queryAppInfo(dialDeviceDescription: DialDeviceDescription, appName: String): Observable<DialAppModel> {
         if (!DialUtils.isRokuDevice(dialDeviceDescription)) {
             return DialUtils.emptyQuery()
         }
@@ -107,7 +104,7 @@ class RokuAppOperator : AppInfoQueryInterface {
                     XmlPullParser.END_TAG -> {
                         if (lastTagName == KEY_APP_LIST_ITEM && appId != null) {
                             result.add(appId)
-//                                TubiLog.d(TAG, "appId=$appId, appName=$appName")
+                            DIALLog.d(TAG, "appId=$appId, appName=$appName")
                         }
                         lastTagName = null
                         appId = null

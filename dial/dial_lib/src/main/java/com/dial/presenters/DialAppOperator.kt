@@ -28,10 +28,7 @@ class DialAppOperator : AppInfoQueryInterface {
         private const val COMMAND_RUN = "run"
     }
 
-    override fun queryAppInfo(
-        dialDeviceDescription: DialDeviceDescription,
-        appName: String
-    ): Observable<DialAppModel> {
+    override fun queryAppInfo(dialDeviceDescription: DialDeviceDescription, appName: String): Observable<DialAppModel> {
         if (DialUtils.isRokuDevice(dialDeviceDescription)) {
             return DialUtils.emptyQuery()
         }
@@ -93,11 +90,7 @@ class DialAppOperator : AppInfoQueryInterface {
      * <state>stopped</state>
      * </service>
      * */
-    private fun parseAppInformation(
-        lastUrl: String,
-        information: String,
-        appName: String
-    ): DialAppModel? {
+    private fun parseAppInformation(lastUrl: String, information: String, appName: String): DialAppModel? {
         var state: String? = null
         try {
             val factory = XmlPullParserFactory.newInstance()

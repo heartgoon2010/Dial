@@ -6,10 +6,7 @@ import java.util.concurrent.TimeUnit
 
 interface DeviceObserver {
     fun onDeviceFound(uPnpServer: UPnPServer): Boolean
-    fun onDeviceDescriptionReady(
-        uPnpServer: UPnPServer,
-        dialDeviceDescription: DialDeviceDescription
-    )
+    fun onDeviceDescriptionReady(uPnpServer: UPnPServer, dialDeviceDescription: DialDeviceDescription)
 
     fun onQueryFinished(uPnpServer: UPnPServer, dialAppModel: DialAppModel)
 }

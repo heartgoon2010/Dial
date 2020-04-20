@@ -6,4 +6,6 @@ import com.dial.models.DialParameter
 interface DiscoveryPolicy {
 
     fun isDIALEnable(config: DialParameter, cache: DialDevicesCache): Boolean
+
+    fun updateDiscoveryTime(discoveryTime: Long)
 }

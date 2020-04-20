@@ -8,12 +8,7 @@ import java.net.InetAddress
  * and allow control point to retrieve the device's description.
  * These are basic steps of UPnP(Universal Plug and Play) protocol
  * */
-open class UPnPServer(
-    val ssid: String,
-    val location: String,
-    val ipAddress: InetAddress,
-    val port: Int
-) {
+open class UPnPServer(val ssid: String, val location: String, val ipAddress: InetAddress, val port: Int) {
 
     companion object {
         private const val LOOPBACK_ADDRESS = "127.0.0.1"
